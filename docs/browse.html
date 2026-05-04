@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browse Businesses — obiDesk</title>
+<meta name="description" content="Browse Abuja businesses by category and area on obiDesk.">
+<meta name="theme-color" content="#c97d1d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<nav class="site-nav" id="site-nav"></nav>
+
+<div class="section" style="padding-top:calc(2vh + 40px);">
+  <div class="section-header">
+    <span class="section-label" id="browse-title" style="margin-bottom:0;">All Businesses</span>
+    <span style="font-family:var(--font-code);font-size:0.6rem;color:var(--text-ghost);letter-spacing:0.1em;" id="result-count"></span>
+  </div>
+
+  <div class="filter-bar" id="filter-bar">
+    <input class="search-input" type="text" id="search-input" placeholder="Search businesses..." style="max-width:280px;font-size:0.9rem;">
+    <select class="form-input" id="filter-cat" style="max-width:200px;font-size:0.82rem;">
+      <option value="">All Categories</option>
+    </select>
+    <select class="form-input" id="filter-area" style="max-width:180px;font-size:0.82rem;">
+      <option value="">All Areas</option>
+    </select>
+    <button class="obi-btn-outline" style="font-size:0.65rem;padding:0.35rem 0.7rem;" onclick="clearFilters()">Clear</button>
+  </div>
+
+  <div class="biz-grid" id="results">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:3rem;color:var(--text-dim);">
+    <p style="font-family:var(--font-heading);font-size:1.2rem;font-style:italic;margin-bottom:0.5rem;">No businesses found.</p>
+    <p style="font-size:0.85rem;">Try a different search or <a href="get-listed.html">list your business</a>.</p>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script src="js/directory.js"></script>
+<script src="pwa.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offline — obiDesk</title>
+  <meta name="theme-color" content="#c97d1d">
+  <style>
+    :root { --bg: #0a1628; --text: #c8b89a; --gold: #c97d1d; --text-dim: #8a7d6a; --border: #1e3a5c; }
+    @media (prefers-color-scheme: light) { :root { --bg: #f5efe6; --text: #4a4035; --gold: #9e6b1b; --text-dim: #6a5d4e; --border: #c8bca8; } }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 21px; }
+    .wrap { max-width: 400px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); margin-bottom: 8px; font-weight: 700; text-shadow: 0 0 60px rgba(201,125,29,0.15); }
+    .tagline { font-style: italic; font-size: 14px; color: var(--text-dim); margin-bottom: 21px; }
+    p { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 21px; }
+    a { color: var(--gold); text-decoration: none; display: inline-block; padding: 8px 21px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; margin: 5px; transition: border-color 200ms; }
+    a:hover { border-color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>You're offline</h1>
+    <p class="tagline">The desk awaits your return.</p>
+    <p>obiDesk needs an internet connection to load new content. Pages you've visited before may still be available.</p>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="browse.html">Browse</a>
+      <a href="field.html">Field Capture</a>
+    </div>
+  </div>
+</body>
+</html>

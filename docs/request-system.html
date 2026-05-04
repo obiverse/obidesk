@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request a System — obiDesk</title>
+  <meta name="description" content="Request a custom digital system for your business. Dashboards, forms, portals, apps, and more.">
+  <meta name="theme-color" content="#c97d1d">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav class="site-nav" id="site-nav"></nav>
+
+<section class="section" style="max-width:640px;">
+  <h1 style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--gold-bright);margin-bottom:var(--phi-8);text-shadow:0 0 60px rgba(201,125,29,0.15);">Request a Custom System</h1>
+  <p style="font-family:var(--font-heading);font-style:italic;color:var(--text-dim);margin-bottom:var(--phi-21);font-size:14px;line-height:1.6;">Need a dashboard, booking system, school portal, or custom app? Tell us what you need and we'll scope it for you.</p>
+
+  <div class="form-grid" id="system-form">
+    <div>
+      <label class="form-label">Business Name *</label>
+      <input class="form-input" id="s-bizName" placeholder="Your business name">
+    </div>
+    <div>
+      <label class="form-label">Contact Name *</label>
+      <input class="form-input" id="s-contactName" placeholder="Your name">
+    </div>
+    <div>
+      <label class="form-label">Phone / WhatsApp *</label>
+      <input class="form-input" id="s-phone" placeholder="08x xxxx xxxx" type="tel">
+    </div>
+    <div>
+      <label class="form-label">System Type *</label>
+      <select class="form-input" id="s-systemType">
+        <option value="">What do you need?</option>
+        <option value="Website">Website</option>
+        <option value="Mobile App">Mobile App</option>
+        <option value="Booking System">Booking System</option>
+        <option value="School Portal">School Portal</option>
+        <option value="Inventory System">Inventory System</option>
+        <option value="CRM / Customer Database">CRM / Customer Database</option>
+        <option value="Payment Integration">Payment Integration</option>
+        <option value="Dashboard / Reports">Dashboard / Reports</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-full">
+      <label class="form-label">Budget Range</label>
+      <select class="form-input" id="s-budget">
+        <option value="">Select range</option>
+        <option value="Under 100k">Under &#8358;100,000</option>
+        <option value="100k - 300k">&#8358;100,000 - &#8358;300,000</option>
+        <option value="300k - 500k">&#8358;300,000 - &#8358;500,000</option>
+        <option value="500k+">&#8358;500,000+</option>
+        <option value="Not sure">Not sure yet</option>
+      </select>
+    </div>
+    <div class="form-full">
+      <label class="form-label">Current Challenge</label>
+      <textarea class="form-input" id="s-challenge" placeholder="What problem are you trying to solve?"></textarea>
+    </div>
+    <div class="form-full" style="display:flex;gap:var(--phi-8);flex-wrap:wrap;">
+      <button class="wa-btn" onclick="submitSystem()">Send via WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/forms.js"></script>
+<script>
+  renderHeader('request-system');
+  renderFooter();
+
+  function submitSystem() {
+    var data = gatherFormData('system-form');
+    var err = validateRequired(data, ['s-bizName', 's-contactName', 's-phone', 's-systemType']);
+    if (err) {
+      showFormStatus('system-form', err, true);
+      return;
+    }
+    var msg = buildSystemMessage({
+      bizName: data['s-bizName'],
+      contactName: data['s-contactName'],
+      phone: data['s-phone'],
+      systemType: data['s-systemType'],
+      budget: data['s-budget'],
+      challenge: data['s-challenge']
+    });
+    openWhatsApp(OBIDESK_WHATSAPP, msg);
+    showFormStatus('system-form', 'Opening WhatsApp...', false);
+  }
+</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>

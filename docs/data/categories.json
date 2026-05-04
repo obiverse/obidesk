@@ -1,0 +1,17 @@
+[
+  {"id": "schools", "name": "Schools & Education", "emoji": "\ud83c\udfeb"},
+  {"id": "clinics", "name": "Clinics & Health", "emoji": "\ud83c\udfe5"},
+  {"id": "restaurants", "name": "Restaurants & Food", "emoji": "\ud83c\udf7d\ufe0f"},
+  {"id": "home-services", "name": "Home Services", "emoji": "\ud83d\udd27"},
+  {"id": "beauty", "name": "Beauty & Grooming", "emoji": "\ud83d\udc87"},
+  {"id": "shops", "name": "Shops & Retail", "emoji": "\ud83d\udecd\ufe0f"},
+  {"id": "logistics", "name": "Logistics & Transport", "emoji": "\ud83d\ude9a"},
+  {"id": "tech", "name": "Tech & IT Services", "emoji": "\ud83d\udcbb"},
+  {"id": "legal", "name": "Legal & Consulting", "emoji": "\u2696\ufe0f"},
+  {"id": "real-estate", "name": "Real Estate & Property", "emoji": "\ud83c\udfe0"},
+  {"id": "auto", "name": "Auto & Mechanics", "emoji": "\ud83d\ude97"},
+  {"id": "finance", "name": "Finance & Banking", "emoji": "\ud83c\udfe6"},
+  {"id": "worship", "name": "Places of Worship", "emoji": "\ud83d\udd4c"},
+  {"id": "events", "name": "Events & Entertainment", "emoji": "\ud83c\udf89"},
+  {"id": "agriculture", "name": "Agriculture & Farm", "emoji": "\ud83c\udf3e"}
+]

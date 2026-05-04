@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get Listed — obiDesk</title>
+  <meta name="description" content="List your Abuja business on obiDesk for free. From signboard to system.">
+  <meta name="theme-color" content="#c97d1d">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <script src="theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav class="site-nav" id="site-nav"></nav>
+
+<section class="section" style="max-width:640px;">
+  <h1 style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--gold-bright);margin-bottom:var(--phi-8);text-shadow:0 0 60px rgba(201,125,29,0.15);">Get Your Business Listed</h1>
+  <p style="font-family:var(--font-heading);font-style:italic;color:var(--text-dim);margin-bottom:var(--phi-21);font-size:14px;line-height:1.6;">Fill in your details and we'll create a free obiDesk page for your business. We'll send you the link via WhatsApp.</p>
+
+  <div class="form-grid" id="listing-form">
+    <div>
+      <label class="form-label">Business Name *</label>
+      <input class="form-input" id="f-bizName" placeholder="e.g. Royal Clinic Wuse">
+    </div>
+    <div>
+      <label class="form-label">Owner / Contact Name *</label>
+      <input class="form-input" id="f-ownerName" placeholder="Your name">
+    </div>
+    <div>
+      <label class="form-label">Phone / WhatsApp *</label>
+      <input class="form-input" id="f-phone" placeholder="08x xxxx xxxx" type="tel">
+    </div>
+    <div>
+      <label class="form-label">Category *</label>
+      <select class="form-input" id="f-category">
+        <option value="">Select category</option>
+      </select>
+    </div>
+    <div>
+      <label class="form-label">Area *</label>
+      <select class="form-input" id="f-area">
+        <option value="">Select area</option>
+      </select>
+    </div>
+    <div>
+      <label class="form-label">Address</label>
+      <input class="form-input" id="f-address" placeholder="Street address">
+    </div>
+    <div class="form-full">
+      <label class="form-label">Landmark</label>
+      <input class="form-input" id="f-landmark" placeholder="e.g. Opposite Shoprite">
+    </div>
+    <div class="form-full">
+      <label class="form-label">Services Offered</label>
+      <textarea class="form-input" id="f-services" placeholder="List your main services"></textarea>
+    </div>
+    <div class="form-full">
+      <label class="form-label">About Your Business</label>
+      <textarea class="form-input" id="f-description" placeholder="Brief description of what you do"></textarea>
+    </div>
+    <div class="form-full" style="display:flex;gap:var(--phi-8);flex-wrap:wrap;">
+      <button class="wa-btn" onclick="submitListing()">Send via WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/forms.js"></script>
+<script>
+  renderHeader('get-listed');
+  renderFooter();
+
+  Promise.all([
+    loadJSON('data/categories.json'),
+    loadJSON('data/areas.json')
+  ]).then(function(data) {
+    var cats = data[0], areas = data[1];
+    var catSel = document.getElementById('f-category');
+    cats.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.name;
+      opt.textContent = c.emoji + ' ' + c.name;
+      catSel.appendChild(opt);
+    });
+    var areaSel = document.getElementById('f-area');
+    areas.forEach(function(a) {
+      var opt = document.createElement('option');
+      opt.value = a.name;
+      opt.textContent = a.name;
+      areaSel.appendChild(opt);
+    });
+  });
+
+  function submitListing() {
+    var data = gatherFormData('listing-form');
+    var err = validateRequired(data, ['f-bizName', 'f-ownerName', 'f-phone', 'f-category', 'f-area']);
+    if (err) {
+      showFormStatus('listing-form', err, true);
+      return;
+    }
+    var msg = buildListingMessage({
+      bizName: data['f-bizName'],
+      ownerName: data['f-ownerName'],
+      phone: data['f-phone'],
+      category: data['f-category'],
+      area: data['f-area'],
+      address: data['f-address'],
+      landmark: data['f-landmark'],
+      services: data['f-services'],
+      description: data['f-description']
+    });
+    openWhatsApp(OBIDESK_WHATSAPP, msg);
+    showFormStatus('listing-form', 'Opening WhatsApp...', false);
+  }
+</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>

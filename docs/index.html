@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>obiDesk — Abuja Business Directory</title>
+<meta name="description" content="Find and connect with trusted Abuja businesses. Schools, clinics, restaurants, home services, and more. From signboard to system.">
+<meta name="theme-color" content="#c97d1d">
+<link rel="canonical" href="https://obiverse.github.io/obidesk/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://obiverse.github.io/obidesk/">
+<meta property="og:title" content="obiDesk — Abuja Business Directory">
+<meta property="og:description" content="Find and connect with trusted Abuja businesses. Schools, clinics, restaurants, home services. From signboard to system.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="obiDesk — Abuja Business Directory">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "obiDesk",
+  "description": "Abuja business directory. From signboard to system.",
+  "url": "https://obiverse.github.io/obidesk/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "OBIVERSE",
+    "url": "https://obiverse.net"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://obiverse.github.io/obidesk/browse.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════ -->
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <h1>From signboard<br>to system.</h1>
+    <p class="tagline">Find and connect with trusted businesses in Abuja. Schools, clinics, restaurants, home services, and more.</p>
+    <div class="hero-search-wrap">
+      <div class="search-bar">
+        <input class="search-input" type="text" id="hero-search" placeholder="Search school, plumber, clinic, printing...">
+        <button class="search-btn" onclick="doSearch()">Search</button>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-label">Abuja Directory</div>
+    <div class="hero-stat-value" id="stat-count">12</div>
+    <div class="hero-stat-sub">businesses listed</div>
+    <div style="margin-top:0.4rem;font-family:var(--font-code);font-size:0.5rem;color:var(--text-ghost);letter-spacing:0.1em;" id="stat-areas">12 areas</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CATEGORIES — Compass Pills
+     ═══════════════════════════════════════════════ -->
+<div class="compass-strip">
+  <div class="compass-scroll" id="category-pills"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     AREAS — Horizontal chips
+     ═══════════════════════════════════════════════ -->
+<div class="section reveal" style="padding-top:0;">
+  <div class="section-label">Browse by Area</div>
+  <div class="area-scroll" id="area-chips"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FEATURED BUSINESSES
+     ═══════════════════════════════════════════════ -->
+<div class="section reveal">
+  <div class="section-header">
+    <span class="section-label" style="margin-bottom:0;">Featured</span>
+    <a href="browse.html" class="obi-btn-outline" style="font-size:0.68rem;padding:0.3rem 0.8rem;">View All</a>
+  </div>
+  <div class="biz-grid" id="featured-grid">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+     ═══════════════════════════════════════════════ -->
+<div class="section reveal">
+  <div class="section-label">How It Works</div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-title">We Find Your Business</div>
+      <div class="step-desc">We walk Abuja, photograph signboards, and create free digital profiles for businesses we discover.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-title">We Send Your Link</div>
+      <div class="step-desc">We WhatsApp you a clean, shareable link to your business page. Review it, suggest changes.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-title">Customers Find You</div>
+      <div class="step-desc">People search by category or area, find your page, and contact you directly via WhatsApp or phone.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PRICING
+     ═══════════════════════════════════════════════ -->
+<div class="section reveal">
+  <div class="section-label">Packages</div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-title">Free Listing</div>
+      <div class="price">Free</div>
+      <div class="price-label">Get discovered</div>
+      <ul class="feature-list">
+        <li>Business name & category</li>
+        <li>Phone & WhatsApp button</li>
+        <li>Area & landmark</li>
+        <li>Shareable link</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-title">Starter Desk</div>
+      <div class="price">&#8358;25k</div>
+      <div class="price-label">Look professional</div>
+      <ul class="feature-list">
+        <li>Everything in Free</li>
+        <li>Polished description</li>
+        <li>Service list & photos</li>
+        <li>Google Maps link</li>
+        <li>Branded share card</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <span class="pill-gold" style="position:absolute;top:0.6rem;right:0.6rem;">Popular</span>
+      <div class="pricing-title">Business Desk</div>
+      <div class="price">&#8358;100k</div>
+      <div class="price-label">Full digital presence</div>
+      <ul class="feature-list">
+        <li>Everything in Starter</li>
+        <li>Mini website</li>
+        <li>Customer inquiry form</li>
+        <li>WhatsApp funnel</li>
+        <li>Basic analytics</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-title">System Desk</div>
+      <div class="price">&#8358;500k+</div>
+      <div class="price-label">Custom software</div>
+      <ul class="feature-list">
+        <li>Dashboard & admin</li>
+        <li>Forms & workflows</li>
+        <li>Staff access</li>
+        <li>Reports & export</li>
+        <li>Custom development</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     CTA
+     ═══════════════════════════════════════════════ -->
+<div class="section reveal" style="text-align:center;padding:3rem 1.5rem;">
+  <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--gold-bright);margin-bottom:0.5rem;text-shadow:0 0 60px rgba(201,125,29,0.2);">Ready to digitize your business?</h2>
+  <p style="font-family:var(--font-heading);font-style:italic;color:var(--text-dim);margin-bottom:1.2rem;">Get a free listing or request a custom system.</p>
+  <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+    <a href="get-listed.html" class="wa-btn" style="animation:waPulse 3s ease-in-out infinite;">Get Listed Free</a>
+    <a href="request-system.html" class="obi-btn-outline">Request a System</a>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script>
+  renderHeader('home');
+  renderFooter();
+
+  var _categories, _areas, _businesses;
+
+  // Show skeletons while loading
+  Promise.all([
+    loadJSON('data/categories.json'),
+    loadJSON('data/areas.json'),
+    loadJSON('data/businesses.json')
+  ]).then(function(data) {
+    _categories = data[0];
+    _areas = data[1];
+    _businesses = data[2];
+
+    // Stats
+    document.getElementById('stat-count').textContent = _businesses.length;
+    var uniqueAreas = [];
+    _businesses.forEach(function(b) { if (uniqueAreas.indexOf(b.areaId) === -1) uniqueAreas.push(b.areaId); });
+    document.getElementById('stat-areas').textContent = uniqueAreas.length + ' areas \u00b7 ' + _categories.length + ' categories';
+
+    renderCategories();
+    renderAreas();
+    renderFeatured();
+  });
+
+  function renderCategories() {
+    var wrap = document.getElementById('category-pills');
+    var counts = {};
+    _businesses.forEach(function(b) {
+      b.categoryIds.forEach(function(c) { counts[c] = (counts[c] || 0) + 1; });
+    });
+    wrap.innerHTML = _categories.map(function(cat) {
+      var n = counts[cat.id] || 0;
+      return '<a class="compass-pill" href="browse.html?cat=' + cat.id + '">' +
+        '<span class="compass-icon">' + cat.emoji + '</span>' +
+        '<span class="compass-name">' + cat.name + '</span>' +
+        (n ? '<span class="compass-count">' + n + '</span>' : '') +
+      '</a>';
+    }).join('');
+  }
+
+  function renderAreas() {
+    var wrap = document.getElementById('area-chips');
+    wrap.innerHTML = _areas.map(function(area) {
+      return '<a class="area-chip" href="browse.html?area=' + area.id + '">' + area.name + '</a>';
+    }).join('');
+  }
+
+  function renderFeatured() {
+    var grid = document.getElementById('featured-grid');
+    var featured = _businesses.filter(function(b) { return b.featured; });
+    if (!featured.length) featured = _businesses.slice(0, 3);
+    grid.innerHTML = featured.map(function(b) {
+      return renderBusinessCard(b, _categories, _areas);
+    }).join('');
+    // Trigger staggered reveal
+    if (window.revealCards) revealCards();
+  }
+
+  function doSearch() {
+    var q = document.getElementById('hero-search').value.trim();
+    if (q) {
+      location.href = 'browse.html?q=' + encodeURIComponent(q);
+    } else {
+      location.href = 'browse.html';
+    }
+  }
+
+  document.getElementById('hero-search').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch();
+  });
+</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>
