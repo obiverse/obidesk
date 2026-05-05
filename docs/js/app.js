@@ -102,9 +102,11 @@ function renderHeader(activePage) {
   if (!header) return;
   header.innerHTML =
     '<a class="site-nav-brand" href="index.html">' + LOGO_SVG + '<span class="brand-obi">obi</span><span class="brand-desk">Desk</span></a>' +
-    '<a class="site-nav-link' + (activePage === 'browse' ? ' active' : '') + '" href="browse.html">Browse</a>' +
+    '<a class="site-nav-link' + (activePage === 'browse' ? ' active' : '') + '" href="browse.html">Directory</a>' +
     '<span class="site-nav-sep">\u00b7</span>' +
-    '<a class="site-nav-link' + (activePage === 'get-listed' ? ' active' : '') + '" href="get-listed.html">Get Listed</a>' +
+    '<a class="site-nav-link' + (activePage === 'deals' ? ' active' : '') + '" href="deals.html">Deals</a>' +
+    '<span class="site-nav-sep">\u00b7</span>' +
+    '<a class="site-nav-link' + (activePage === 'get-listed' ? ' active' : '') + '" href="get-listed.html">List</a>' +
     '<span class="site-nav-sep">\u00b7</span>' +
     '<a class="site-nav-link' + (activePage === 'field' ? ' active' : '') + '" href="field.html">Field</a>' +
     '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme">' +

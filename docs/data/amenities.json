@@ -1,0 +1,21 @@
+{
+  "generator": {"name": "24hr Power/Generator", "icon": "\u26a1"},
+  "ac": {"name": "Air Conditioning", "icon": "\u2744\ufe0f"},
+  "water": {"name": "Water Available", "icon": "\ud83d\udca7"},
+  "water-heater": {"name": "Hot Water", "icon": "\ud83c\udf21\ufe0f"},
+  "secure-parking": {"name": "Secure Parking", "icon": "\ud83c\udd7f\ufe0f"},
+  "wifi": {"name": "Wi-Fi", "icon": "\ud83d\udcf6"},
+  "breakfast": {"name": "Breakfast Included", "icon": "\ud83c\udf73"},
+  "kitchen": {"name": "Kitchen Access", "icon": "\ud83c\udf7d\ufe0f"},
+  "family-friendly": {"name": "Family Friendly", "icon": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67"},
+  "near-main-road": {"name": "Near Main Road", "icon": "\ud83d\udee3\ufe0f"},
+  "close-to-airport": {"name": "Close to Airport", "icon": "\u2708\ufe0f"},
+  "pos-accepted": {"name": "POS/Card Accepted", "icon": "\ud83d\udcb3"},
+  "transfer-available": {"name": "Transfer Available", "icon": "\ud83d\ude97"},
+  "quiet-environment": {"name": "Quiet Environment", "icon": "\ud83c\udf3f"},
+  "private-bathroom": {"name": "Private Bathroom", "icon": "\ud83d\udebf"},
+  "self-contained": {"name": "Self-Contained", "icon": "\ud83c\udfe0"},
+  "no-hidden-charges": {"name": "No Hidden Charges", "icon": "\u2705"},
+  "flexible-checkin": {"name": "Flexible Check-in", "icon": "\ud83d\udd53"},
+  "pay-balance-arrival": {"name": "Pay Balance on Arrival", "icon": "\ud83d\udcb0"}
+}
