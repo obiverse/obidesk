@@ -27,6 +27,8 @@ self.addEventListener('install', e => {
         './field.html',
         './deals.html',
         './deal.html',
+        './receipt.html',
+        './receipts.html',
         './offline.html',
         './css/base.css',
         './theme.js',
@@ -39,7 +41,9 @@ self.addEventListener('install', e => {
         './js/idb.js',
         './js/field.js',
         './js/deals.js',
+        './js/receipt.js',
         './js/library.js',
+        './css/receipt.css',
         './data/categories.json',
         './data/areas.json',
       ]).catch(() => {})

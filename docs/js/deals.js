@@ -7,11 +7,6 @@ var _deals, _areas, _amenities;
 
 /* ── Utilities ────────────────────────────────── */
 
-function formatNaira(amount) {
-  if (!amount) return '\u20a60';
-  return '\u20a6' + amount.toLocaleString('en-NG');
-}
-
 function discountPercent(normal, deal) {
   if (!normal || !deal) return 0;
   return Math.round(((normal - deal) / normal) * 100);

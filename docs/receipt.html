@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Invoice — obiDesk</title>
+<meta name="description" content="Create beautiful invoices for your Nigerian business. Free, offline, instant. Share via WhatsApp or print as PDF.">
+<meta name="theme-color" content="#c97d1d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/receipt.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- Mobile Tabs -->
+<div class="receipt-tabs">
+  <button class="receipt-tab active" data-tab="form">Form</button>
+  <button class="receipt-tab" data-tab="preview">Preview</button>
+</div>
+
+<div class="receipt-layout">
+  <!-- ═══ LEFT: Form Panel ═══ -->
+  <div class="receipt-form-panel">
+
+    <!-- Business Info -->
+    <details id="biz-details" open>
+      <summary class="receipt-section-title" style="margin-bottom:0.5rem;">Your Business</summary>
+      <div class="receipt-section">
+        <div class="form-grid">
+          <div><label class="form-label">Business Name</label><input class="form-input" id="f-bizName" placeholder="Your business name"></div>
+          <div><label class="form-label">Phone</label><input class="form-input" id="f-bizPhone" placeholder="08x xxxx xxxx" type="tel"></div>
+          <div><label class="form-label">Email</label><input class="form-input" id="f-bizEmail" placeholder="you@business.com" type="email"></div>
+          <div><label class="form-label">Address</label><input class="form-input" id="f-bizAddress" placeholder="Business address"></div>
+          <div><label class="form-label">Invoice Prefix</label><input class="form-input" id="f-invoicePrefix" placeholder="OBI" value="OBI" maxlength="5" style="max-width:100px;"></div>
+        </div>
+        <div style="margin-top:0.8rem;">
+          <div class="receipt-section-title">Bank Details</div>
+          <div class="form-grid">
+            <div>
+              <label class="form-label">Bank</label>
+              <div class="styled-select" style="min-width:auto;">
+                <select class="form-input" id="f-bankName" style="max-width:none;">
+                  <option value="">Select bank</option>
+                </select>
+              </div>
+            </div>
+            <div><label class="form-label">Account Number</label><input class="form-input" id="f-accountNumber" placeholder="0123456789" maxlength="10"></div>
+            <div class="form-full"><label class="form-label">Account Name</label><input class="form-input" id="f-accountName" placeholder="Account holder name"></div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Client Info -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Client</div>
+      <div class="form-grid">
+        <div><label class="form-label">Client Name *</label><input class="form-input" id="f-clientName" placeholder="Client or company name"></div>
+        <div><label class="form-label">Phone / WhatsApp</label><input class="form-input" id="f-clientPhone" placeholder="08x xxxx xxxx" type="tel"></div>
+        <div class="form-full"><label class="form-label">Email</label><input class="form-input" id="f-clientEmail" placeholder="client@email.com" type="email"></div>
+      </div>
+    </div>
+
+    <!-- Line Items -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Items</div>
+      <div class="line-items-wrap" id="line-items"></div>
+      <button class="line-item-add" onclick="addLineItem()">+ Add Item</button>
+    </div>
+
+    <!-- Totals + Tax + Discount -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Totals</div>
+      <div class="tax-row">
+        <label class="toggle-switch">
+          <input type="checkbox" id="f-vat" checked>
+          <span class="toggle-track"></span>
+        </label>
+        <span class="tax-label">VAT 7.5%</span>
+      </div>
+      <div style="margin-top:0.6rem;">
+        <div class="form-grid">
+          <div><label class="form-label">Discount (flat)</label><input class="form-input" id="f-discount" type="number" min="0" step="100" value="0" placeholder="0"></div>
+          <div><label class="form-label">Due Date</label><input class="form-input" id="f-dueDate" type="date"></div>
+        </div>
+      </div>
+      <div id="totals-summary" style="margin-top:0.8rem;"></div>
+    </div>
+
+    <!-- Notes -->
+    <div class="receipt-section">
+      <div class="receipt-section-title">Notes</div>
+      <textarea class="form-input" id="f-notes" placeholder="Payment terms, thank you note, instructions..." rows="3"></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="receipt-actions" id="receipt-actions-wrap">
+      <button class="obi-btn" onclick="saveInvoice()">Save</button>
+      <button class="obi-btn-outline" onclick="printInvoice()">Print / PDF</button>
+      <button class="wa-btn" onclick="shareInvoice()">WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT: Live Preview ═══ -->
+  <div class="receipt-preview-panel">
+    <div class="invoice-card" id="invoice-preview">
+      <div style="text-align:center;color:#ccc;padding:3rem;font-style:italic;">
+        Start filling the form to see your invoice...
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script src="js/idb.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/receipt.js"></script>
+<script>initReceiptPage();</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>

@@ -34,6 +34,11 @@ function callUrl(phone) {
   return 'tel:' + (phone || '').replace(/\s/g, '');
 }
 
+function formatNaira(amount) {
+  if (!amount && amount !== 0) return '\u20a60';
+  return '\u20a6' + Number(amount).toLocaleString('en-NG');
+}
+
 function verificationBadge(status) {
   switch (status) {
     case 'verified':
@@ -105,6 +110,8 @@ function renderHeader(activePage) {
     '<a class="site-nav-link' + (activePage === 'browse' ? ' active' : '') + '" href="browse.html">Directory</a>' +
     '<span class="site-nav-sep">\u00b7</span>' +
     '<a class="site-nav-link' + (activePage === 'deals' ? ' active' : '') + '" href="deals.html">Deals</a>' +
+    '<span class="site-nav-sep">\u00b7</span>' +
+    '<a class="site-nav-link' + (activePage === 'receipts' ? ' active' : '') + '" href="receipts.html">Receipts</a>' +
     '<span class="site-nav-sep">\u00b7</span>' +
     '<a class="site-nav-link' + (activePage === 'get-listed' ? ' active' : '') + '" href="get-listed.html">List</a>' +
     '<span class="site-nav-sep">\u00b7</span>' +

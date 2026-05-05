@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Invoices — obiDesk</title>
+<meta name="description" content="Track your invoices, payments, and outstanding balances. Free invoice dashboard for Nigerian businesses.">
+<meta name="theme-color" content="#c97d1d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="theme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/receipt.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<nav class="site-nav" id="site-nav"></nav>
+
+<!-- Hero -->
+<section class="hero" style="padding-bottom:1vh;">
+  <div class="hero-left">
+    <h1>Your Invoices</h1>
+    <p class="tagline">Track payments. Know your numbers. Get paid faster.</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-label">Outstanding</div>
+    <div class="hero-stat-value" id="stat-outstanding">&mdash;</div>
+    <div class="hero-stat-sub" id="stat-count">loading...</div>
+  </div>
+</section>
+
+<!-- Dashboard Cards -->
+<div class="section reveal" style="padding-top:0;">
+  <div class="dash-grid" id="dash-cards">
+    <div class="skeleton-card" style="height:90px;"></div>
+    <div class="skeleton-card" style="height:90px;"></div>
+    <div class="skeleton-card" style="height:90px;"></div>
+    <div class="skeleton-card" style="height:90px;"></div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="section" style="padding-top:0;">
+  <div class="filter-strip">
+    <div class="filter-row">
+      <span class="filter-label">Status</span>
+      <div class="toggle-group" id="status-filters">
+        <button class="toggle-pill active" data-value="" onclick="setStatusFilter(this)">All</button>
+        <button class="toggle-pill" data-value="draft" onclick="setStatusFilter(this)">Draft</button>
+        <button class="toggle-pill" data-value="sent" onclick="setStatusFilter(this)">Sent</button>
+        <button class="toggle-pill" data-value="paid" onclick="setStatusFilter(this)">Paid</button>
+        <button class="toggle-pill" data-value="overdue" onclick="setStatusFilter(this)">Overdue</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Search</span>
+      <input class="filter-search" id="inv-search" placeholder="Client name or invoice #..." oninput="searchInvoices(this.value)">
+    </div>
+  </div>
+</div>
+
+<!-- Invoice List -->
+<div class="section">
+  <div class="biz-grid" id="invoices-grid">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+  <div id="no-invoices" style="display:none;text-align:center;padding:3rem;">
+    <p style="font-family:var(--font-heading);font-size:1.3rem;font-style:italic;color:var(--text-dim);margin-bottom:0.8rem;">No invoices yet</p>
+    <p style="font-size:0.88rem;color:var(--text-ghost);margin-bottom:1.2rem;">Create your first invoice and start getting paid.</p>
+    <a href="receipt.html" class="obi-btn">Create Invoice</a>
+  </div>
+</div>
+
+<!-- FAB -->
+<a href="receipt.html" class="fab no-print" title="New Invoice">+</a>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/app.js"></script>
+<script src="js/library.js"></script>
+<script src="js/idb.js"></script>
+<script src="js/receipt.js"></script>
+<script>initReceiptsPage();</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>
