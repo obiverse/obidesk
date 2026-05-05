@@ -119,8 +119,8 @@ function renderDealCard(deal) {
     var paramType = getParam('type') || '';
     var paramCat = getParam('cat') || '';
     var paramArea = getParam('area') || '';
-    document.getElementById('filter-type').value = paramType;
-    document.getElementById('filter-cat').value = paramCat;
+    activateToggle('filter-type-group', paramType);
+    activateToggle('filter-cat-group', paramCat);
     document.getElementById('filter-area').value = paramArea;
 
     document.getElementById('deal-count').textContent = _deals.filter(function(d) { return d.status === 'live'; }).length;
@@ -129,9 +129,32 @@ function renderDealCard(deal) {
     bindDealEvents();
   });
 
+  // Toggle pill helpers
+  function activateToggle(groupId, value) {
+    var pills = document.querySelectorAll('#' + groupId + ' .toggle-pill');
+    pills.forEach(function(p) {
+      p.classList.toggle('active', p.getAttribute('data-value') === value);
+    });
+  }
+
+  function getActiveToggle(groupId) {
+    var active = document.querySelector('#' + groupId + ' .toggle-pill.active');
+    return active ? active.getAttribute('data-value') : '';
+  }
+
+  window.setDealType = function(el) {
+    activateToggle('filter-type-group', el.getAttribute('data-value'));
+    applyDealFilters();
+  };
+
+  window.setDealCat = function(el) {
+    activateToggle('filter-cat-group', el.getAttribute('data-value'));
+    applyDealFilters();
+  };
+
   function applyDealFilters() {
-    var type = document.getElementById('filter-type').value;
-    var cat = document.getElementById('filter-cat').value;
+    var type = getActiveToggle('filter-type-group');
+    var cat = getActiveToggle('filter-cat-group');
     var area = document.getElementById('filter-area').value;
 
     var results = _deals.filter(function(d) {
@@ -171,14 +194,12 @@ function renderDealCard(deal) {
   }
 
   function bindDealEvents() {
-    document.getElementById('filter-type').addEventListener('change', applyDealFilters);
-    document.getElementById('filter-cat').addEventListener('change', applyDealFilters);
     document.getElementById('filter-area').addEventListener('change', applyDealFilters);
   }
 
   window.clearDealFilters = function() {
-    document.getElementById('filter-type').value = '';
-    document.getElementById('filter-cat').value = '';
+    activateToggle('filter-type-group', '');
+    activateToggle('filter-cat-group', '');
     document.getElementById('filter-area').value = '';
     applyDealFilters();
   };

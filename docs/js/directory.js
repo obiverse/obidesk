@@ -42,14 +42,15 @@
   });
 
   function populateFilters() {
-    var catSel = document.getElementById('filter-cat');
-    _categories.forEach(function(cat) {
-      var opt = document.createElement('option');
-      opt.value = cat.id;
-      opt.textContent = cat.emoji + ' ' + cat.name;
-      catSel.appendChild(opt);
-    });
-    catSel.value = filterCat;
+    // Build category toggle pills
+    var catGroup = document.getElementById('browse-cat-group');
+    if (catGroup) {
+      var pills = '<button class="toggle-pill' + (!filterCat ? ' active' : '') + '" data-value="" onclick="setBrowseCat(this)">All</button>';
+      _categories.forEach(function(cat) {
+        pills += '<button class="toggle-pill' + (filterCat === cat.id ? ' active' : '') + '" data-value="' + cat.id + '" onclick="setBrowseCat(this)">' + cat.emoji + ' ' + cat.name + '</button>';
+      });
+      catGroup.innerHTML = pills;
+    }
 
     var areaSel = document.getElementById('filter-area');
     _areas.forEach(function(area) {
@@ -63,8 +64,20 @@
     document.getElementById('search-input').value = filterQ;
   }
 
+  window.setBrowseCat = function(el) {
+    var pills = document.querySelectorAll('#browse-cat-group .toggle-pill');
+    pills.forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    applyFilters();
+  };
+
+  function getActiveCat() {
+    var active = document.querySelector('#browse-cat-group .toggle-pill.active');
+    return active ? active.getAttribute('data-value') : '';
+  }
+
   function applyFilters() {
-    filterCat = document.getElementById('filter-cat').value;
+    filterCat = getActiveCat();
     filterArea = document.getElementById('filter-area').value;
     filterQ = document.getElementById('search-input').value.trim();
 
@@ -147,7 +160,11 @@
   }
 
   window.clearFilters = function() {
-    document.getElementById('filter-cat').value = '';
+    // Reset category pills
+    var pills = document.querySelectorAll('#browse-cat-group .toggle-pill');
+    pills.forEach(function(p) { p.classList.remove('active'); });
+    var allPill = document.querySelector('#browse-cat-group .toggle-pill[data-value=""]');
+    if (allPill) allPill.classList.add('active');
     document.getElementById('filter-area').value = '';
     document.getElementById('search-input').value = '';
     filterCat = ''; filterArea = ''; filterQ = '';

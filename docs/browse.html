@@ -25,15 +25,24 @@
     <span style="font-family:var(--font-code);font-size:0.6rem;color:var(--text-ghost);letter-spacing:0.1em;" id="result-count"></span>
   </div>
 
-  <div class="filter-bar" id="filter-bar">
-    <input class="search-input" type="text" id="search-input" placeholder="Search businesses..." style="max-width:280px;font-size:0.9rem;">
-    <select class="form-input" id="filter-cat" style="max-width:200px;font-size:0.82rem;">
-      <option value="">All Categories</option>
-    </select>
-    <select class="form-input" id="filter-area" style="max-width:180px;font-size:0.82rem;">
-      <option value="">All Areas</option>
-    </select>
-    <button class="obi-btn-outline" style="font-size:0.65rem;padding:0.35rem 0.7rem;" onclick="clearFilters()">Clear</button>
+  <div class="filter-strip" id="filter-bar">
+    <div class="filter-row">
+      <span class="filter-label">Search</span>
+      <input class="filter-search" type="text" id="search-input" placeholder="Search businesses...">
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Category</span>
+      <div class="toggle-group" id="browse-cat-group"></div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Area</span>
+      <div class="styled-select">
+        <select id="filter-area">
+          <option value="">All Areas</option>
+        </select>
+      </div>
+      <button class="filter-clear" onclick="clearFilters()">Clear all</button>
+    </div>
   </div>
 
   <div class="biz-grid" id="results">

@@ -1069,8 +1069,169 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
 .form-status-err { background: rgba(239,68,68,0.06); color: #ef4444; border: 1px solid rgba(239,68,68,0.15); }
 
 /* ═══════════════════════════════════════════════
-   FILTER BAR
+   FILTER STRIP — Toggle pills, not dropdowns
+   Think Paystack/Kuda: clean, tactile, modern.
    ═══════════════════════════════════════════════ */
+.filter-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.8rem;
+  padding: 1.2rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: var(--font-code);
+  font-size: 0.5rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  min-width: 50px;
+  flex-shrink: 0;
+}
+
+/* Toggle pills — replace dropdowns for small option sets */
+.toggle-group {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.toggle-pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-dim);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.toggle-pill:hover {
+  border-color: rgba(201,125,29,0.25);
+  color: var(--text);
+  background: rgba(201,125,29,0.04);
+}
+.toggle-pill.active {
+  border-color: var(--gold);
+  color: var(--bg-deep);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+  box-shadow: 0 2px 8px rgba(201,125,29,0.2);
+  font-weight: 700;
+}
+[data-theme="light"] .toggle-pill.active {
+  color: #fff;
+}
+
+/* Mystery pill gets purple when active */
+.toggle-pill[data-value="mystery"].active {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  border-color: #7c3aed;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.2);
+}
+
+/* Styled select — for area (too many options for pills) */
+.styled-select {
+  position: relative;
+  min-width: 140px;
+}
+.styled-select select {
+  width: 100%;
+  padding: 0.4rem 2rem 0.4rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all 0.25s ease;
+  outline: none;
+}
+.styled-select select:hover {
+  border-color: rgba(201,125,29,0.25);
+}
+.styled-select select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold-focus);
+}
+.styled-select::after {
+  content: '';
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--gold-dim);
+  pointer-events: none;
+  transition: border-color 0.2s;
+}
+.styled-select:hover::after { border-top-color: var(--gold); }
+
+/* Search within filter strip */
+.filter-search {
+  flex: 1;
+  min-width: 160px;
+  max-width: 300px;
+  padding: 0.4rem 0.85rem;
+  background: rgba(6, 13, 24, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text-bright);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+[data-theme="light"] .filter-search { background: rgba(235, 228, 216, 0.3); }
+.filter-search:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold-focus);
+}
+.filter-search::placeholder { color: var(--text-ghost); font-style: italic; }
+
+/* Clear button */
+.filter-clear {
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-ghost);
+  font-family: var(--font-code);
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-clear:hover {
+  color: var(--gold);
+  border-color: var(--border-subtle);
+}
+
+/* Legacy compat */
 .filter-bar {
   display: flex; gap: 0.5rem; flex-wrap: wrap;
   align-items: center;

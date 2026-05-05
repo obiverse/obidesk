@@ -34,25 +34,36 @@
 
 <!-- Filters -->
 <div class="section" style="padding-top:0;padding-bottom:0.5rem;">
-  <div class="filter-bar" id="deal-filters">
-    <select class="form-input" id="filter-type" style="max-width:160px;font-size:0.82rem;">
-      <option value="">All Deals</option>
-      <option value="visible">Visible Deals</option>
-      <option value="mystery">Mystery Deals</option>
-    </select>
-    <select class="form-input" id="filter-cat" style="max-width:160px;font-size:0.82rem;">
-      <option value="">All Categories</option>
-      <option value="hotel">Hotels</option>
-      <option value="shortlet">Shortlets</option>
-      <option value="event_space">Event Spaces</option>
-      <option value="salon">Salons</option>
-      <option value="car_hire">Car Hire</option>
-      <option value="coworking">Coworking</option>
-    </select>
-    <select class="form-input" id="filter-area" style="max-width:160px;font-size:0.82rem;">
-      <option value="">All Areas</option>
-    </select>
-    <button class="obi-btn-outline" style="font-size:0.62rem;padding:0.35rem 0.7rem;" onclick="clearDealFilters()">Clear</button>
+  <div class="filter-strip" id="deal-filters">
+    <div class="filter-row">
+      <span class="filter-label">Type</span>
+      <div class="toggle-group" id="filter-type-group">
+        <button class="toggle-pill active" data-value="" onclick="setDealType(this)">All</button>
+        <button class="toggle-pill" data-value="visible" onclick="setDealType(this)">Visible</button>
+        <button class="toggle-pill" data-value="mystery" onclick="setDealType(this)">Mystery</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Category</span>
+      <div class="toggle-group" id="filter-cat-group">
+        <button class="toggle-pill active" data-value="" onclick="setDealCat(this)">All</button>
+        <button class="toggle-pill" data-value="hotel" onclick="setDealCat(this)">Hotels</button>
+        <button class="toggle-pill" data-value="shortlet" onclick="setDealCat(this)">Shortlets</button>
+        <button class="toggle-pill" data-value="event_space" onclick="setDealCat(this)">Spaces</button>
+        <button class="toggle-pill" data-value="salon" onclick="setDealCat(this)">Salons</button>
+        <button class="toggle-pill" data-value="car_hire" onclick="setDealCat(this)">Car Hire</button>
+        <button class="toggle-pill" data-value="coworking" onclick="setDealCat(this)">Coworking</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Area</span>
+      <div class="styled-select">
+        <select id="filter-area">
+          <option value="">All Areas</option>
+        </select>
+      </div>
+      <button class="filter-clear" onclick="clearDealFilters()">Clear all</button>
+    </div>
   </div>
 </div>
 
