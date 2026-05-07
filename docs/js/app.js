@@ -102,24 +102,82 @@ var LOGO_SVG = '<svg class="nav-logo-svg" viewBox="0 0 40 40" xmlns="http://www.
   '<circle cx="20" cy="20" r="1.5" fill="currentColor" opacity="0.9"/>' +
 '</svg>';
 
+var NAV_ITEMS = [
+  { id: 'browse', href: 'browse.html', label: 'Directory', icon: '\ud83d\udcc2' },
+  { id: 'deals', href: 'deals.html', label: 'Deals', icon: '\ud83d\udcb0' },
+  { id: 'receipts', href: 'receipts.html', label: 'Receipts', icon: '\ud83e\uddfe' },
+  { id: 'get-listed', href: 'get-listed.html', label: 'Get Listed', icon: '\u2795' },
+  { id: 'field', href: 'field.html', label: 'Field Capture', icon: '\ud83d\udcf7' },
+];
+
 function renderHeader(activePage) {
   var header = document.getElementById('site-nav');
   if (!header) return;
+
+  // Desktop nav links
+  var links = NAV_ITEMS.map(function(item) {
+    return '<a class="site-nav-link' + (activePage === item.id ? ' active' : '') + '" href="' + item.href + '">' + item.label + '</a>';
+  }).join('<span class="site-nav-sep">\u00b7</span>');
+
+  // Drawer links (mobile)
+  var drawerLinks = NAV_ITEMS.map(function(item) {
+    return '<a class="nav-drawer-link' + (activePage === item.id ? ' active' : '') + '" href="' + item.href + '">' +
+      '<span class="drawer-icon">' + item.icon + '</span>' + item.label + '</a>';
+  }).join('');
+
   header.innerHTML =
     '<a class="site-nav-brand" href="index.html">' + LOGO_SVG + '<span class="brand-obi">obi</span><span class="brand-desk">Desk</span></a>' +
-    '<a class="site-nav-link' + (activePage === 'browse' ? ' active' : '') + '" href="browse.html">Directory</a>' +
-    '<span class="site-nav-sep">\u00b7</span>' +
-    '<a class="site-nav-link' + (activePage === 'deals' ? ' active' : '') + '" href="deals.html">Deals</a>' +
-    '<span class="site-nav-sep">\u00b7</span>' +
-    '<a class="site-nav-link' + (activePage === 'receipts' ? ' active' : '') + '" href="receipts.html">Receipts</a>' +
-    '<span class="site-nav-sep">\u00b7</span>' +
-    '<a class="site-nav-link' + (activePage === 'get-listed' ? ' active' : '') + '" href="get-listed.html">List</a>' +
-    '<span class="site-nav-sep">\u00b7</span>' +
-    '<a class="site-nav-link' + (activePage === 'field' ? ' active' : '') + '" href="field.html">Field</a>' +
+    links +
     '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme">' +
       '<span class="theme-icon"></span>' +
-    '</button>';
+    '</button>' +
+    '<button class="nav-burger" onclick="openDrawer()" aria-label="Menu">\u2630</button>';
+
+  // Inject drawer + backdrop (once)
+  if (!document.getElementById('nav-drawer')) {
+    var backdrop = document.createElement('div');
+    backdrop.className = 'nav-backdrop';
+    backdrop.id = 'nav-backdrop';
+    backdrop.onclick = closeDrawer;
+    document.body.appendChild(backdrop);
+
+    var drawer = document.createElement('div');
+    drawer.className = 'nav-drawer';
+    drawer.id = 'nav-drawer';
+    drawer.innerHTML =
+      '<button class="nav-drawer-close" onclick="closeDrawer()">\u2715</button>' +
+      '<a class="nav-drawer-link' + (activePage === 'home' ? ' active' : '') + '" href="index.html">' +
+        '<span class="drawer-icon">\ud83c\udfe0</span>Home</a>' +
+      drawerLinks +
+      '<div class="nav-drawer-divider"></div>' +
+      '<a class="nav-drawer-link" href="request-system.html">' +
+        '<span class="drawer-icon">\ud83d\udee0\ufe0f</span>Request System</a>' +
+      '<div class="nav-drawer-divider"></div>' +
+      '<div style="padding:0.5rem 0.8rem;display:flex;align-items:center;gap:0.5rem;">' +
+        '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme" style="margin-left:0;">' +
+          '<span class="theme-icon"></span>' +
+        '</button>' +
+        '<span style="font-family:var(--font-code);font-size:0.52rem;color:var(--text-ghost);letter-spacing:0.1em;">THEME</span>' +
+      '</div>';
+    document.body.appendChild(drawer);
+  }
 }
+
+window.openDrawer = function() {
+  var drawer = document.getElementById('nav-drawer');
+  var backdrop = document.getElementById('nav-backdrop');
+  if (drawer) { drawer.classList.add('open'); }
+  if (backdrop) { backdrop.classList.add('open'); }
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeDrawer = function() {
+  var drawer = document.getElementById('nav-drawer');
+  var backdrop = document.getElementById('nav-backdrop');
+  if (drawer) { drawer.classList.remove('open'); }
+  if (backdrop) { backdrop.classList.remove('open'); }
+  document.body.style.overflow = '';
+};
 
 function renderFooter() {
   var footer = document.getElementById('site-footer');
