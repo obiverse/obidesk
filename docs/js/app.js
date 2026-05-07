@@ -128,39 +128,44 @@ function renderHeader(activePage) {
   header.innerHTML =
     '<a class="site-nav-brand" href="index.html">' + LOGO_SVG + '<span class="brand-obi">obi</span><span class="brand-desk">Desk</span></a>' +
     links +
-    '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme">' +
+    '<button class="theme-toggle desktop-only" onclick="obiThemeCycle()" aria-label="Toggle theme">' +
       '<span class="theme-icon"></span>' +
     '</button>' +
     '<button class="nav-burger" onclick="openDrawer()" aria-label="Menu">\u2630</button>';
 
-  // Inject drawer + backdrop (once)
-  if (!document.getElementById('nav-drawer')) {
-    var backdrop = document.createElement('div');
-    backdrop.className = 'nav-backdrop';
-    backdrop.id = 'nav-backdrop';
-    backdrop.onclick = closeDrawer;
-    document.body.appendChild(backdrop);
+  // Remove old drawer/backdrop if they exist (clean re-render)
+  var oldDrawer = document.getElementById('nav-drawer');
+  var oldBackdrop = document.getElementById('nav-backdrop');
+  if (oldDrawer) oldDrawer.remove();
+  if (oldBackdrop) oldBackdrop.remove();
 
-    var drawer = document.createElement('div');
-    drawer.className = 'nav-drawer';
-    drawer.id = 'nav-drawer';
-    drawer.innerHTML =
-      '<button class="nav-drawer-close" onclick="closeDrawer()">\u2715</button>' +
-      '<a class="nav-drawer-link' + (activePage === 'home' ? ' active' : '') + '" href="index.html">' +
-        '<span class="drawer-icon">\ud83c\udfe0</span>Home</a>' +
-      drawerLinks +
-      '<div class="nav-drawer-divider"></div>' +
-      '<a class="nav-drawer-link" href="request-system.html">' +
-        '<span class="drawer-icon">\ud83d\udee0\ufe0f</span>Request System</a>' +
-      '<div class="nav-drawer-divider"></div>' +
-      '<div style="padding:0.5rem 0.8rem;display:flex;align-items:center;gap:0.5rem;">' +
-        '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme" style="margin-left:0;">' +
-          '<span class="theme-icon"></span>' +
-        '</button>' +
-        '<span style="font-family:var(--font-code);font-size:0.52rem;color:var(--text-ghost);letter-spacing:0.1em;">THEME</span>' +
-      '</div>';
-    document.body.appendChild(drawer);
-  }
+  // Backdrop
+  var backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  backdrop.id = 'nav-backdrop';
+  backdrop.addEventListener('click', function() { closeDrawer(); });
+  document.body.appendChild(backdrop);
+
+  // Drawer
+  var drawer = document.createElement('div');
+  drawer.className = 'nav-drawer';
+  drawer.id = 'nav-drawer';
+  drawer.innerHTML =
+    '<button class="nav-drawer-close" onclick="closeDrawer()">\u2715</button>' +
+    '<a class="nav-drawer-link' + (activePage === 'home' ? ' active' : '') + '" href="index.html">' +
+      '<span class="drawer-icon">\ud83c\udfe0</span>Home</a>' +
+    drawerLinks +
+    '<div class="nav-drawer-divider"></div>' +
+    '<a class="nav-drawer-link" href="request-system.html">' +
+      '<span class="drawer-icon">\ud83d\udee0\ufe0f</span>Request System</a>' +
+    '<div class="nav-drawer-divider"></div>' +
+    '<div style="padding:0.5rem 0.8rem;display:flex;align-items:center;gap:0.5rem;">' +
+      '<button class="theme-toggle" onclick="obiThemeCycle()" aria-label="Toggle theme" style="margin-left:0;">' +
+        '<span class="theme-icon"></span>' +
+      '</button>' +
+      '<span style="font-family:var(--font-code);font-size:0.52rem;color:var(--text-ghost);letter-spacing:0.1em;">THEME</span>' +
+    '</div>';
+  document.body.appendChild(drawer);
 }
 
 window.openDrawer = function() {

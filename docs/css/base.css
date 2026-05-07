@@ -1260,6 +1260,10 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
 
 /* ═══════════════════════════════════════════════
    MOBILE NAV — Hamburger + slide drawer
+   Drawer is always in DOM but off-screen via
+   transform. No display:none ↔ flex transition
+   issues. Visibility controlled purely by
+   transform + pointer-events.
    ═══════════════════════════════════════════════ */
 .nav-burger {
   display: none;
@@ -1275,38 +1279,45 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
 }
 .nav-burger:hover { color: var(--gold-bright); }
 
+/* Drawer — always flex, pushed off-screen by default */
 .nav-drawer {
-  display: none;
   position: fixed;
   top: 0; right: 0; bottom: 0;
-  width: 260px;
+  width: 270px;
   z-index: 100;
   background: var(--bg-elevated);
   border-left: 1px solid var(--border);
   box-shadow: -8px 0 32px rgba(0,0,0,0.3);
-  padding: 1.5rem;
+  padding: 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  flex-direction: column;
-  gap: 0.3rem;
-  overflow-y: auto;
+  pointer-events: none;
+  visibility: hidden;
 }
 [data-theme="light"] .nav-drawer {
   box-shadow: -8px 0 32px rgba(0,0,0,0.1);
 }
 .nav-drawer.open {
   transform: translateX(0);
+  pointer-events: auto;
+  visibility: visible;
 }
+
 .nav-drawer-close {
   align-self: flex-end;
   background: none;
   border: none;
   color: var(--text-dim);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 0.3rem;
   transition: color 0.2s;
+  line-height: 1;
 }
 .nav-drawer-close:hover { color: var(--gold); }
 
@@ -1314,49 +1325,54 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.7rem 0.8rem;
+  padding: 0.65rem 0.8rem;
   border-radius: var(--radius-md);
   color: var(--text);
   font-family: var(--font-ui);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 .nav-drawer-link:hover {
   background: var(--sacred);
   color: var(--gold);
 }
 .nav-drawer-link.active {
-  background: var(--sacred);
+  background: rgba(201,125,29,0.1);
   color: var(--gold-bright);
   font-weight: 700;
 }
 .nav-drawer-link .drawer-icon {
   font-size: 1.1rem;
-  width: 1.4rem;
+  width: 1.5rem;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .nav-drawer-divider {
   height: 1px;
   background: var(--border);
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
 }
 
+/* Backdrop — always in DOM, visibility controlled by class */
 .nav-backdrop {
-  display: none;
   position: fixed;
   inset: 0;
   z-index: 99;
   background: rgba(6,13,24,0.6);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 .nav-backdrop.open {
   opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 /* ═══════════════════════════════════════════════
@@ -1377,12 +1393,18 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
   .form-grid { grid-template-columns: 1fr; }
   .profile-name { font-size: 1.6rem; }
 
-  /* Hide desktop nav links, show burger */
+  /* Hide desktop nav, show burger */
   .site-nav-link { display: none; }
   .site-nav-sep { display: none; }
-  .nav-burger { display: flex; }
-  .nav-drawer { display: flex; }
-  .nav-backdrop { display: block; }
+  .desktop-only { display: none; }
+  .nav-burger { display: flex; align-items: center; justify-content: center; }
+}
+
+@media (min-width: 769px) {
+  /* On desktop, hide drawer and backdrop completely */
+  .nav-drawer { display: none !important; }
+  .nav-backdrop { display: none !important; }
+  .nav-burger { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -1391,4 +1413,5 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
   body { font-size: 16px; }
   .filter-strip { padding: 0.8rem; }
   .toggle-pill { padding: 0.3rem 0.6rem; font-size: 0.62rem; }
+  .nav-drawer { width: 80vw; }
 }
