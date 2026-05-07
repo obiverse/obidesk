@@ -131,7 +131,13 @@ function renderHeader(activePage) {
     '<button class="theme-toggle desktop-only" onclick="obiThemeCycle()" aria-label="Toggle theme">' +
       '<span class="theme-icon"></span>' +
     '</button>' +
-    '<button class="nav-burger" onclick="openDrawer()" aria-label="Menu">\u2630</button>';
+    '<button class="nav-burger" onclick="openDrawer()" aria-label="Menu">' +
+      '<svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect width="20" height="2" rx="1" fill="currentColor"/>' +
+        '<rect y="7" width="20" height="2" rx="1" fill="currentColor"/>' +
+        '<rect y="14" width="14" height="2" rx="1" fill="currentColor"/>' +
+      '</svg>' +
+    '</button>';
 
   // Remove old drawer/backdrop if they exist (clean re-render)
   var oldDrawer = document.getElementById('nav-drawer');

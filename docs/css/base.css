@@ -1268,16 +1268,20 @@ textarea.form-input { min-height: 100px; resize: vertical; line-height: 1.6; }
 .nav-burger {
   display: none;
   background: none;
-  border: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   color: var(--gold);
-  font-size: 1.3rem;
   cursor: pointer;
-  padding: 0.3rem;
+  padding: 0.5rem;
   line-height: 1;
-  margin-left: 0.25rem;
-  transition: color 0.2s;
+  margin-left: auto;
+  transition: color 0.2s, border-color 0.2s;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 34px;
 }
-.nav-burger:hover { color: var(--gold-bright); }
+.nav-burger:hover { color: var(--gold-bright); border-color: var(--gold); }
 
 /* Drawer — always flex, pushed off-screen by default */
 .nav-drawer {
