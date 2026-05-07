@@ -1,4 +1,7 @@
-/* obiDesk — Field Capture Logic */
+/* ═══════════════════════════════════════════════
+   obiDesk — Field Capture Logic
+   Walk Abuja. Photograph signboards. Build the directory.
+   ═══════════════════════════════════════════════ */
 
 (function() {
   renderHeader('field');
@@ -45,6 +48,11 @@
       document.getElementById(id).value = '';
     });
     document.getElementById('fc-photo').value = '';
+    // Reset photo label
+    var label = document.getElementById('photo-label');
+    if (label) label.classList.remove('has-photo');
+    var text = document.getElementById('photo-text');
+    if (text) text.textContent = 'Tap to take photo';
   }
 
   function readPhoto() {
@@ -57,6 +65,19 @@
       reader.readAsDataURL(input.files[0]);
     });
   }
+
+  // Photo select UX
+  window.onPhotoSelect = function(input) {
+    var label = document.getElementById('photo-label');
+    var text = document.getElementById('photo-text');
+    if (input.files && input.files[0]) {
+      if (label) label.classList.add('has-photo');
+      if (text) text.textContent = input.files[0].name.substring(0, 30);
+    } else {
+      if (label) label.classList.remove('has-photo');
+      if (text) text.textContent = 'Tap to take photo';
+    }
+  };
 
   window.saveCapture = function() {
     var data = getFormData();
@@ -80,37 +101,47 @@
       showFormStatus('field-form', 'Business name is required.', true);
       return;
     }
-    var catLabel = document.getElementById('fc-category').selectedOptions[0]?.textContent || data.category;
-    var areaLabel = document.getElementById('fc-area').selectedOptions[0]?.textContent || data.area;
+    var catEl = document.getElementById('fc-category');
+    var areaEl = document.getElementById('fc-area');
+    var catLabel = catEl && catEl.selectedOptions[0] ? catEl.selectedOptions[0].textContent : data.category;
+    var areaLabel = areaEl && areaEl.selectedOptions[0] ? areaEl.selectedOptions[0].textContent : data.area;
     var msg = 'FIELD CAPTURE\n' +
-      '━━━━━━━━━━━━━━━━━━\n' +
+      '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n' +
       'Name: ' + data.name + '\n' +
       'Category: ' + catLabel + '\n' +
       'Area: ' + areaLabel + '\n' +
       (data.address ? 'Address: ' + data.address + '\n' : '') +
       (data.phone ? 'Phone: ' + data.phone + '\n' : '') +
       (data.notes ? 'Notes: ' + data.notes + '\n' : '') +
-      '\n— Field captured via obiDesk';
+      '\n\u2014 Field captured via obiDesk';
     openWhatsApp(OBIDESK_WHATSAPP, msg);
   };
 
   function refreshQueue() {
     obiDB.getAllCaptures().then(function(captures) {
-      document.getElementById('queue-count').textContent = '(' + captures.length + ')';
+      // Update counters
+      var countEl = document.getElementById('queue-count');
+      if (countEl) countEl.textContent = '(' + captures.length + ')';
+      var badgeEl = document.getElementById('queue-badge');
+      if (badgeEl) badgeEl.textContent = captures.length;
+
       var list = document.getElementById('queue-list');
+      if (!list) return;
+
       if (captures.length === 0) {
-        list.innerHTML = '<p style="color:var(--color-text-ghost);font-size:12px;">No captures yet. Walk Abuja!</p>';
+        list.innerHTML = '<p style="color:var(--text-ghost);font-size:0.78rem;font-style:italic;">No captures yet. Walk Abuja!</p>';
         return;
       }
+
       list.innerHTML = captures.map(function(c) {
-        return '<div class="card" style="margin-bottom:var(--phi-8);padding:var(--phi-13);">' +
+        return '<div class="biz-card revealed" style="padding:0.8rem 1rem;margin-bottom:0.4rem;cursor:default;">' +
           '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-            '<strong style="color:var(--color-text-bright);font-size:13px;">' + c.name + '</strong>' +
-            '<button style="background:none;border:none;color:var(--color-text-ghost);cursor:pointer;font-size:11px;" onclick="deleteCapture(' + c.id + ')">remove</button>' +
+            '<div class="biz-card-name" style="font-size:0.92rem;">' + c.name + '</div>' +
+            '<button class="filter-clear" onclick="deleteCapture(' + c.id + ')">remove</button>' +
           '</div>' +
-          '<div style="font-size:11px;color:var(--color-text-dim);">' +
-            (c.category || '') + ' &middot; ' + (c.area || '') +
-            (c.phone ? ' &middot; ' + c.phone : '') +
+          '<div style="font-family:var(--font-ui);font-size:0.68rem;color:var(--text-dim);margin-top:0.2rem;">' +
+            (c.category || '') + ' \u00b7 ' + (c.area || '') +
+            (c.phone ? ' \u00b7 ' + c.phone : '') +
           '</div>' +
         '</div>';
       }).join('');
@@ -130,7 +161,6 @@
   window.exportCaptures = function() {
     obiDB.getAllCaptures().then(function(captures) {
       if (!captures.length) { alert('No captures to export.'); return; }
-      // Strip photos for clean export
       var clean = captures.map(function(c) {
         var copy = Object.assign({}, c);
         delete copy.photo;
@@ -146,11 +176,10 @@
     });
   };
 
-  // Online notification
   window.addEventListener('online', function() {
     obiDB.getAllCaptures().then(function(captures) {
       if (captures.length > 0) {
-        showFormStatus('field-form', 'You\'re back online! ' + captures.length + ' captures ready to export.', false);
+        showFormStatus('field-form', 'Back online! ' + captures.length + ' captures ready to export.', false);
       }
     });
   });
